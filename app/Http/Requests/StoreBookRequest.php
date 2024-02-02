@@ -23,7 +23,7 @@ class StoreBookRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
-            'cover' => ['required', 'file', 'image'],
+            'cover' => ['required', 'file'],
             'author' => ['required', 'string'],
             'synopsis' => ['required', 'string'],
             'value' => ['required', 'numeric', "regex:/^\d+(\.\d{1,2})?$/"],

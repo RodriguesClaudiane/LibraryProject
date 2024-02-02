@@ -31,7 +31,6 @@ function BookCreate({auth}) {
     function submit(e) {
         e.preventDefault();
         form.post(route('book_store'), {
-            onSuccess: (v) => console.log('ok:',v),
             onError: (e) => console.log('error:',e),
         });
     }

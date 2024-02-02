@@ -1,8 +1,13 @@
 import {Head, Link} from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
+import {useEffect} from "react";
+import RenderBooks from "@/Components/Book/RenderBooks.jsx";
 
-function Book({auth}) {
+function Book({auth, books}) {
+    useEffect(() => {
+        console.log(books);
+    }, [])
     return (
         <>
             <AuthenticatedLayout
@@ -22,6 +27,9 @@ function Book({auth}) {
                                     >
                                         <PrimaryButton type={"button"}>Registrar livro</PrimaryButton>
                                     </Link>
+                                </div>
+                                <div className="grid grid-flow-col mt-4">
+                                    {books.map(book => <RenderBooks key={book.id} book={book} /> )}
                                 </div>
                             </div>
                         </div>

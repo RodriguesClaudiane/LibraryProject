@@ -14,7 +14,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Book/Book');
+        return Inertia::render('Book/Book', [
+            'books' => Book::all()
+        ]);
     }
 
     /**
@@ -30,7 +32,15 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
-        return $request->validated();
+        $validation = $request->validated();
+
+        $file = $validation['cover'];
+        $path = $file->store('book', 'public');
+        $validation['cover'] = '/storage/' . $path;
+
+        Book::create($validation);
+
+        return to_route('book_index');
     }
 
     /**
