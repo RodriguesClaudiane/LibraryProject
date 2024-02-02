@@ -10,5 +10,6 @@ Route::prefix('book')
 
         Route::get('', 'index')->name('book_index');
         Route::get('create', 'create')->name('book_create');
+        Route::post('','store')->name('book_store');
 
     });
