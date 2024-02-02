@@ -28,7 +28,7 @@ function Book({auth, books}) {
                                         <PrimaryButton type={"button"}>Registrar livro</PrimaryButton>
                                     </Link>
                                 </div>
-                                <div className="grid grid-flow-col mt-4">
+                                <div className="grid grid-flow-row grid-cols-4 mt-4">
                                     {books.map(book => <RenderBooks key={book.id} book={book} /> )}
                                 </div>
                             </div>
