@@ -3,10 +3,12 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import {useEffect} from "react";
 import RenderBooks from "@/Components/Book/RenderBooks.jsx";
+import NavLink from "@/Components/NavLink.jsx";
 
-function Book({auth, books}) {
+function Book({auth, paginate}) {
+    const books = paginate.data;
     useEffect(() => {
-        console.log(books);
+        console.log(paginate);
     }, [])
     return (
         <>
@@ -30,6 +32,18 @@ function Book({auth, books}) {
                                 </div>
                                 <div className="grid grid-flow-row grid-cols-4 mt-4">
                                     {books.map(book => <RenderBooks key={book.id} book={book} /> )}
+                                </div>
+                                <div>
+                                    {paginate.links.map( (link, index) =>
+                                        <NavLink
+                                            href={link.url}
+                                            active={link.active}
+                                        >
+                                            {
+                                                index === 0 ? '<' : index === paginate.links.length - 1 ? '>' : link.label
+                                            }
+                                        </NavLink>
+                                    )}
                                 </div>
                             </div>
                         </div>

@@ -35,9 +35,9 @@ class BookPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Book $book): bool
+    public function update(User $user): bool
     {
-        //
+        return $user->role === 'adm';
     }
 
     /**

@@ -14,8 +14,9 @@ class BookController extends Controller
      */
     public function index()
     {
+        $paginate = Book::select('id','title', 'cover', 'author', 'ratings', 'format', 'value')->paginate(28);
         return Inertia::render('Book/Book', [
-            'books' => Book::all()
+            'paginate' => $paginate
         ]);
     }
 
@@ -48,7 +49,9 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        //
+        return Inertia::render('Book/BookShow', [
+            'book' => $book
+        ]);
     }
 
     /**
@@ -56,7 +59,10 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        $this->authorize('update', $book);
+        return Inertia::render('Book/BookEdit', [
+            'book' => $book
+        ]);
     }
 
     /**
@@ -64,7 +70,19 @@ class BookController extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
-        //
+        $this->authorize('update', $book);
+        $validation = $request->validated();
+
+        if($request->file('cover')) {
+            $file = $request->file('cover');
+            $path = $file->store('book', 'public');
+            $validation['cover'] = '/storage/' . $path;
+        } else {
+            $validation['cover'] = $book['cover'];
+        }
+
+        $book->update($validation);
+        return back();
     }
 
     /**

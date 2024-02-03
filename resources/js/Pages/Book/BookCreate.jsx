@@ -4,6 +4,7 @@ import InputLabel from "@/Components/InputLabel.jsx";
 import TextInput from "@/Components/TextInput.jsx";
 import InputError from "@/Components/InputError.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
+import {useState} from "react";
 
 function BookCreate({auth}) {
     const form = useForm({
@@ -22,11 +23,13 @@ function BookCreate({auth}) {
         language: '',
         add_info: ''
     });
+    const [showImg, setShowImg] = useState(null);
     function handlerInput(e) {
         form.setData(e.target.name, e.target.value);
     }
     function handlerInputFile(e) {
         form.setData(e.target.name, e.target.files[0]);
+        setShowImg(URL.createObjectURL(e.target.files[0]));
     }
     function submit(e) {
         e.preventDefault();
@@ -67,15 +70,20 @@ function BookCreate({auth}) {
                                         </div>
                                     </div>
 
-                                    <div className={"mt-4"}>
-                                        <InputLabel value="Capa"/>
-                                        <TextInput
-                                            name="cover"
-                                            type="file"
-                                            accept="image/*"
-                                            onChange={handlerInputFile}
-                                        />
-                                        <InputError message={form.errors.cover}/>
+                                    <div className={"mt-4 flex"}>
+                                        <div>
+                                            <InputLabel value="Capa"/>
+                                            <TextInput
+                                                name="cover"
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={handlerInputFile}
+                                            />
+                                            <InputError message={form.errors.cover}/>
+                                        </div>
+                                        <div className="w-32 ml-1">
+                                            {showImg ? <img src={showImg} alt="Imagem selecionada" /> : ''}
+                                        </div>
                                     </div>
 
                                     <div className={"mt-4"}>
