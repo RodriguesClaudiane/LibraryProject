@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('format'); //Edição em brochura, capa dura...
             $table->string('language');
             $table->longText('add_info')->nullable();
+            $table->boolean('archived')->default(0);
             $table->timestamps();
         });
     }

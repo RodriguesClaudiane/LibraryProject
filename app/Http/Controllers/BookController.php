@@ -14,7 +14,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $paginate = Book::select('id','title', 'cover', 'author', 'ratings', 'format', 'value')->paginate(28);
+        $paginate = Book::select('id','title', 'cover', 'author', 'ratings', 'format', 'value')->where('archived', '=', 0)->paginate(28);
         return Inertia::render('Book/Book', [
             'paginate' => $paginate
         ]);
@@ -90,6 +90,23 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
+        return to_route('book_index');
     }
+
+    public function index_archived()
+    {
+        $paginate = Book::select('id','title', 'cover', 'author', 'ratings', 'format', 'value')->where('archived', '=', 1)->paginate(28);
+        return Inertia::render('Book/BookArchived', [
+            'paginate' => $paginate
+        ]);
+    }
+    public function update_archived_book(Book $book)
+    {
+        $book->update([
+            'archived' => $book['archived'] === 1 ? 0 : 1
+        ]);
+        return back();
+    }
+
 }

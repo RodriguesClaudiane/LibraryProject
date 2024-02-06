@@ -4,6 +4,7 @@ import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import {useEffect} from "react";
 import RenderBooks from "@/Components/Book/RenderBooks.jsx";
 import NavLink from "@/Components/NavLink.jsx";
+import SecondaryButton from "@/Components/SecondaryButton.jsx";
 
 function Book({auth, paginate}) {
     const books = paginate.data;
@@ -22,13 +23,21 @@ function Book({auth, paginate}) {
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div className="p-6 text-gray-900">
-                                <div>Bem vindo a nossa livraria!</div>
+                                <div className={"text-2xl"}>Bem vindo a nossa livraria!</div>
                                 <div className={"flex justify-end"}>
-                                    <Link
-                                        href={route('book_create')}
-                                    >
-                                        <PrimaryButton type={"button"}>Registrar livro</PrimaryButton>
-                                    </Link>
+                                    <div className={"grid"}>
+                                        <Link
+                                            href={route('book_create')}
+                                        >
+                                            <PrimaryButton type={"button"}>Registrar livro</PrimaryButton>
+                                        </Link>
+                                        <Link
+                                            href={route('book_index_archived')}
+                                            className={"mt-1"}
+                                        >
+                                            <SecondaryButton type="button">Livros arquivados</SecondaryButton>
+                                        </Link>
+                                    </div>
                                 </div>
                                 <div className="grid grid-flow-row grid-cols-4 mt-4">
                                     {books.map(book => <RenderBooks key={book.id} book={book} /> )}

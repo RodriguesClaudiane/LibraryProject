@@ -1,11 +1,23 @@
-import {Head, Link} from "@inertiajs/react";
+import {Head, Link, router, useForm} from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
 import {useEffect, useState} from "react";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import DangerButton from "@/Components/DangerButton.jsx";
+import Modal from "@/Components/Modal.jsx";
+import SecondaryButton from "@/Components/SecondaryButton.jsx";
 
 function BookShow({auth, book}) {
     const [synopsisAll, setSynopsisAll] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
+    const {put} = useForm();
+
+    function submitArchived(e) {
+        e.preventDefault();
+
+        put(route('book_update_archived', {book: book.id}), {
+            onSuccess: () => router.get(route('book_')),
+        });
+    }
 
     return (
         <AuthenticatedLayout
@@ -17,7 +29,9 @@ function BookShow({auth, book}) {
                         <Link href={route('book_edit', {book: book})}>
                             <PrimaryButton>Editar</PrimaryButton>
                         </Link>
-                        <DangerButton>Deletar</DangerButton>
+                        <DangerButton
+                            onClick={() => setOpenModal(true)}
+                        >Deletar</DangerButton>
                     </div>
                 </div>
                 : <h2 className="font-semibold text-xl text-gray-800 leading-tight">{book.title}</h2>
@@ -60,6 +74,21 @@ function BookShow({auth, book}) {
                     </div>
                 </div>
             </div>
+            <Modal show={openModal} onClose={() => setOpenModal(false)}>
+                <div className={"p-4"}>
+                    <div className={"text-center text-3xl"}>Deseja realmente deletar este livro?</div>
+                    <div className={"text-center text-xl text-gray-600"}>Este livro será apagado permanentemente!</div>
+                    <div className={"text-center text-xl text-gray-600"}>Talvez seja melhor arquiva seu livro, para uma melhor analise futura!</div>
+                    <div className={"flex justify-center mt-4"}>
+                        <form onSubmit={submitArchived}>
+                            <SecondaryButton type={"submit"}>Arquivar</SecondaryButton>
+                        </form>
+                        <Link href={route('book_delete', {book: book.id})} method="delete">
+                            <DangerButton>Deletar</DangerButton>
+                        </Link>
+                    </div>
+                </div>
+            </Modal>
         </AuthenticatedLayout>
     );
 }

@@ -36,3 +36,10 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+//Route::prefix('book')
+//    ->controller(\App\Http\Controllers\BookController::class)
+//    ->group(function () {
+//        Route::get('archived', 'index_archived')
+//            ->name('book_index_archived');
+//    });
