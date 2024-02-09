@@ -11,9 +11,7 @@ function BookShow({auth, book}) {
     const [openModal, setOpenModal] = useState(false);
     const {put} = useForm();
 
-    function submitArchived(e) {
-        e.preventDefault();
-
+    function archived() {
         put(route('book_update_archived', {book: book.id}), {
             onSuccess: () => router.get(route('book_index_archived')),
         });
@@ -26,7 +24,14 @@ function BookShow({auth, book}) {
                 <div className={"flex justify-between"}>
                     <h2 className="font-semibold text-xl text-gray-800 leading-tight">{book.title}</h2>
                     <div>
-                        <Link href={route('book_edit', {book: book})}>
+                        <SecondaryButton
+                            onClick={archived}
+                        >Arquivar
+                        </SecondaryButton>
+                        <Link
+                            href={route('book_edit', {book: book})}
+                            className={"mr-2 ml-2"}
+                        >
                             <PrimaryButton>Editar</PrimaryButton>
                         </Link>
                         <DangerButton
@@ -80,9 +85,7 @@ function BookShow({auth, book}) {
                     <div className={"text-center text-xl text-gray-600"}>Este livro será apagado permanentemente!</div>
                     <div className={"text-center text-xl text-gray-600"}>Talvez seja melhor arquiva seu livro, para uma melhor analise futura!</div>
                     <div className={"flex justify-center mt-4"}>
-                        <form onSubmit={submitArchived}>
-                            <SecondaryButton type={"submit"}>Arquivar</SecondaryButton>
-                        </form>
+                        <SecondaryButton className={"mr-1"} onClick={archived}>Arquivar</SecondaryButton>
                         <Link href={route('book_delete', {book: book.id})} method="delete">
                             <DangerButton>Deletar</DangerButton>
                         </Link>
