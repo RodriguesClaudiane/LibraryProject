@@ -29,7 +29,7 @@ class BookPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->role === 'adm';
     }
 
     /**
@@ -45,7 +45,7 @@ class BookPolicy
      */
     public function delete(User $user, Book $book): bool
     {
-        //
+        return $user->role === 'adm';
     }
 
     /**
@@ -62,5 +62,10 @@ class BookPolicy
     public function forceDelete(User $user, Book $book): bool
     {
         //
+    }
+
+    public function archived(User $user): bool
+    {
+        return $user->role === 'adm';
     }
 }

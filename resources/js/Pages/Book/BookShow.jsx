@@ -15,7 +15,7 @@ function BookShow({auth, book}) {
         e.preventDefault();
 
         put(route('book_update_archived', {book: book.id}), {
-            onSuccess: () => router.get(route('book_')),
+            onSuccess: () => router.get(route('book_index_archived')),
         });
     }
 

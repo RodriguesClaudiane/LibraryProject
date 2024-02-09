@@ -30,6 +30,7 @@ function BookArchived({auth, paginate}) {
                                         <NavLink
                                             href={link.url}
                                             active={link.active}
+                                            key={index}
                                         >
                                             {
                                                 index === 0 ? '<' : index === paginate.links.length - 1 ? '>' : link.label
